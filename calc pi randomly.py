@@ -32,11 +32,11 @@ def factor(r):
         f.append([t])
     return f
 
-c1 = 0
-c2 = 0
-c3 = 0
-g = 100000000
-s = 3
+c1 = 0 #initiate counting vars
+c2 = 0 #initiate counting vars
+c3 = 0 #initiate counting vars
+g = 10000 #maximum sized random number, preferably infinite, but large numbers result in rounding to zero and divby0 err
+s = 10 #trials
 
 for i in range(1,s+1):
     a = list(set([item for sublist in factor(randint(1,g)) for item in sublist]))
@@ -50,12 +50,14 @@ for i in range(1,s+1):
     if c:
         #print "these are the elements of list a that are present in list b:"
         #(c)
-        c2 += 1
+        c2 += 1 #unfavourable outcome
     else:
         #print "no elements of list a are in list b"
-        c3 += 1
-        pass
-    print((((c1)/s)*100),"%",sqrt(6/(c3/c1)),"pi approx.")
+        c3 += 1 #favourable outcome
+    if c3 != 0:
+        print((((c1)/s)*100),"%",sqrt(6/(c3/c1)),"pi approx.") #percent complete and approx pi so far
+    else:
+        print((((c1)/s)*100),"%","0 pi approx.") #fixes getting divby0 err due to no favourable outcomes yet, percent complete and approx pi so far
     #if (((c1)/s)*1000)%10 == 0:
         #print(round(((c1)/s)*100),"%",sqrt(6/(c3/c1)),"pi approx.")
 print("Complete")
