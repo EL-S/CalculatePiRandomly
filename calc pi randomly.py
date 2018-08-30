@@ -35,12 +35,14 @@ def factor(r):
 c1 = 0 #initiate counting vars
 c2 = 0 #initiate counting vars
 c3 = 0 #initiate counting vars
-g = 10000 #maximum sized random number, preferably infinite, but large numbers result in rounding to zero and divby0 err
-s = 10 #trials
+g = 10000 #recommend (10000) maximum sized random number, preferably infinite, small numbers converge on "not pi"
+s = 10000 #recommend (10000) trials
+percent_decimal = 5 #how precise the percent is (in decimal places)
+percent_toggle = 1 #(1 is faster due to less prints) set to 1 to only print every percent completed, or 0 for precise percent
 
 for i in range(1,s+1):
-    a = list(set([item for sublist in factor(randint(1,g)) for item in sublist]))
-    b = list(set([item for sublist in factor(randint(1,g)) for item in sublist]))
+    a = list(set([item for sublist in factor(randint(1,g)) for item in sublist])) #honestly don't understand how this really works
+    b = list(set([item for sublist in factor(randint(1,g)) for item in sublist])) #honestly don't understand how this really works
     c = []
     c1 += 1
     for bx in b:
@@ -54,12 +56,15 @@ for i in range(1,s+1):
     else:
         #print "no elements of list a are in list b"
         c3 += 1 #favourable outcome
-    if c3 != 0:
-        print((((c1)/s)*100),"%",sqrt(6/(c3/c1)),"pi approx.") #percent complete and approx pi so far
-    else:
-        print((((c1)/s)*100),"%","0 pi approx.") #fixes getting divby0 err due to no favourable outcomes yet, percent complete and approx pi so far
-    #if (((c1)/s)*1000)%10 == 0:
-        #print(round(((c1)/s)*100),"%",sqrt(6/(c3/c1)),"pi approx.")
+    percent = round((((c1)/s)*100),percent_decimal)
+    if (c3 != 0) and (percent_toggle != 1):
+        print(str(percent)+"%",sqrt(6/(c3/c1)),"pi approx.") #percent complete and approx pi so far
+    elif (c3 == 0) and (percent_toggle != 1):
+        print(str(percent)+"%","0 pi approx.") #fixes getting divby0 err due to no favourable outcomes yet, percent complete and approx pi so far
+    if ((((c1)/s)*1000)%10 == 0) and (percent_toggle == 1):
+        print(str(percent)+"%",sqrt(6/(c3/c1)),"pi approx.")
+    elif ((((c1)/s)*1000)%10 == 0) and (c3 == 0) and (percent_toggle == 1):
+        print(str(percent)+"%","0 pi approx.")
 print("Complete")
 print(c1,"outcomes")
 print(c2,"unfavourable outcomes")
