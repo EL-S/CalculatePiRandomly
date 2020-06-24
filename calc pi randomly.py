@@ -35,8 +35,8 @@ def factor(r):
 c1 = 0 #initiate counting vars
 c2 = 0 #initiate counting vars
 c3 = 0 #initiate counting vars
-g = 10000 #recommend (10000) maximum sized random number, preferably infinite, small numbers converge on "not pi"
-s = 10000 #recommend (10000) trials
+g = 1000 #recommend (10000) maximum sized random number, preferably infinite, small numbers converge on "not pi"
+s = 10 #recommend (10000) trials
 percent_decimal = 5 #how precise the percent is (in decimal places)
 percent_toggle = 1 #(1 is faster due to less prints) set to 1 to only print every percent completed, or 0 for precise percent
 
@@ -62,7 +62,10 @@ for i in range(1,s+1):
     elif (c3 == 0) and (percent_toggle != 1):
         print(str(percent)+"%","0 pi approx.") #fixes getting divby0 err due to no favourable outcomes yet, percent complete and approx pi so far
     if ((((c1)/s)*1000)%10 == 0) and (percent_toggle == 1):
-        print(str(percent)+"%",sqrt(6/(c3/c1)),"pi approx.")
+        try:
+            print(str(percent)+"%",sqrt(6/(c3/c1)),"pi approx.")
+        except:
+            print(str(percent)+"%","0","pi approx.")
     elif ((((c1)/s)*1000)%10 == 0) and (c3 == 0) and (percent_toggle == 1):
         print(str(percent)+"%","0 pi approx.")
 print("Complete")
